@@ -1,0 +1,16 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --bg: #f3f6f9; }
+body { @apply bg-[var(--bg)] text-slate-900; }
+
+.card { @apply bg-white rounded-3xl border border-slate-100 shadow-glass; }
+.input { @apply w-full border border-slate-200 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-200; }
+.btn { @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl font-semibold; }
+.btn-cta { @apply bg-brand-primary text-white hover:bg-emerald-700; }
+.bubble { @apply rounded-2xl px-4 py-3 max-w-[70%]; }
+.bubble-user { @apply bg-brand-primary text-white ml-auto; }
+.bubble-bot { @apply bg-slate-100 text-slate-800; }
+.divider { @apply w-px bg-slate-200; }

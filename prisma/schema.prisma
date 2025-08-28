@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  purchases    Purchase[]
+  messages     ChatMessage[] // 👈 back relation to ChatMessage.user
+}
+
+model Purchase {
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  createdAt    DateTime @default(now())
+  grams        Float
+  pricePerGram Int
+  channel      String
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  role      String // "user" | "assistant" | "system"
+  content   String
+  createdAt DateTime @default(now())
+}

@@ -4,7 +4,7 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 export type AIResult = {
   intent: "gold_investment" | "goal_planning" | "general";
   reply: string;
-  suggestedAmount?: number; // always grams
+  suggestedGrams?: number; // 👈 always grams
 };
 
 export async function advise(message: string, userName?: string): Promise<AIResult> {
@@ -27,8 +27,8 @@ export async function advise(message: string, userName?: string): Promise<AIResu
           role: "system",
           content: `You are Kuber AI, a firm but supportive advisor.
 - Only advise about digital gold.
-- Always return suggestions in **grams** (not INR).
-- If user speaks in INR, convert to grams using price ₹${GOLD_PRICE}/g.
+- Always give final recommended purchase amount in GRAMS (not INR).
+- If user gives INR, convert to grams using price ₹${GOLD_PRICE}/g.
 - Include one fact: "${fact}".
 - Be concise (<120 words).`
         },
@@ -47,12 +47,14 @@ export async function advise(message: string, userName?: string): Promise<AIResu
     if (/gold|buy|invest/i.test(message)) intent = "gold_investment";
     if (/trip|travel|goal|monthly|plan/i.test(message)) intent = "goal_planning";
 
-    // parse suggested grams (regex for numbers + g)
-    let suggestedAmount: number | undefined;
+    // parse grams from reply (e.g. "32.5 grams" or "32g")
+    let suggestedGrams: number | undefined;
     const gramsMatch = reply.match(/([\d,.]+)\s*g/);
-    if (gramsMatch) suggestedAmount = parseFloat(gramsMatch[1].replace(/,/g, ""));
+    if (gramsMatch) {
+      suggestedGrams = parseFloat(gramsMatch[1].replace(/,/g, ""));
+    }
 
-    return { intent, reply, suggestedAmount };
+    return { intent, reply, suggestedGrams };
   } catch (err: any) {
     console.error("❌ OpenAI error:", err?.response?.data || err.message || err);
     return { intent: "general", reply: "⚠️ AI service unavailable." };

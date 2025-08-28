@@ -1,10 +1,10 @@
-// app/api/auth/me/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { verifyJWT } from "@/lib/auth";
 
 export async function GET(req: Request) {
   try {
+    // ✅ Extract token from cookies
     const token = req.headers
       .get("cookie")
       ?.split("; ")
@@ -20,9 +20,15 @@ export async function GET(req: Request) {
       return NextResponse.json({ user: null }, { status: 200 });
     }
 
+    // ✅ Return full profile info (id, email, name)
     const user = await prisma.user.findUnique({
       where: { id: payload.sub as string },
-      select: { id: true, email: true, createdAt: true },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true,
+      },
     });
 
     return NextResponse.json({ user: user || null }, { status: 200 });

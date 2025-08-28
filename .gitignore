@@ -1,1 +1,12 @@
-node_modules
+# Next.js
+.next/
+out/
+
+# dependencies
+node_modules/
+
+# env files
+.env
+
+# local db
+prisma/dev.db

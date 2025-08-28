@@ -1,4 +1,4 @@
-// File: C:\Users\ASUS\Downloads\kuber-ai-gold-supreme\app\login\page.tsx
+// File: C:\Users\ASUS\Downloads\kuber-ai-gold\app\login\page.tsx
 import * as entry from '../../../../app/login/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

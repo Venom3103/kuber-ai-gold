@@ -14,12 +14,3 @@ export async function POST() {
 
   return res;
 }
-;
-  } catch (err) {
-    console.error("❌ auth/logout error:", err);
-    return NextResponse.json(
-      { error: "Could not log out" },
-      { status: 500 }
-    );
-  }
-}

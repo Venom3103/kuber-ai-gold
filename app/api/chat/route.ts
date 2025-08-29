@@ -29,8 +29,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No message provided" }, { status: 400 });
     }
 
-    // 3. Ask AI
-    const aiResp = await advise(message, payload.email || "User");
+// 3. Ask AI
+const email = typeof payload.email === "string" ? payload.email : "User";
+const aiResp = await advise(message, email);
 
     // 4. Save to DB (safe guard against DB errors)
     try {

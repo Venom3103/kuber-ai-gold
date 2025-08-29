@@ -44,5 +44,3 @@ export async function getSession(req: Request) {
     return null;
   }
 }
-
-// i am editing just for the fun

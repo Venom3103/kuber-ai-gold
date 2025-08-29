@@ -1,4 +1,4 @@
-// File: C:\Users\ASUS\Downloads\kuber-ai-gold\app\api\auth\me\route.ts
+// File: C:\Web Development\kuber-ai-gold\app\api\auth\me\route.ts
 import * as entry from '../../../../../../app/api/auth/me/route.js'
 import type { NextRequest } from 'next/server.js'
 

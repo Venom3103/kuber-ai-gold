@@ -1,9 +1,9 @@
 {
   "/login/page": "app/login/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/api/chat/route": "app/api/chat/route.js",
-  "/api/history/route": "app/api/history/route.js",
+  "/page": "app/page.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
   "/api/auth/logout/route": "app/api/auth/logout/route.js",
-  "/api/buy-gold/route": "app/api/buy-gold/route.js",
-  "/api/auth/me/route": "app/api/auth/me/route.js"
+  "/api/history/route": "app/api/history/route.js",
+  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/dashboard/page": "app/dashboard/page.js"
 }

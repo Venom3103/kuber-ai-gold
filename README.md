@@ -11,9 +11,8 @@
 
 ## Run
 ```bash
-npm i
-cp .env.local.example .env
 npx prisma generate
+npm i
 npm run dev
 ```
 Open `http://localhost:3000`, create an account, then start chatting.

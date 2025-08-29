@@ -12,10 +12,8 @@ export async function signJWT(payload: object) {
     .sign(secret);
 }
 
-export async function verifyJWT(token: string) {
-  const { payload } = await jose.jwtVerify(token, secret);
-  return payload;
-}
+export async function verifyJWT(token: string): Promise<{ sub: string; email?: string } | null>
+
 
 export function hashPassword(pw: string) {
   return bcrypt.hashSync(pw, 10);

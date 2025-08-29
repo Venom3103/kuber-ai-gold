@@ -1,11 +1,11 @@
 
-# Kuber AI — Gold (Supreme Build v7)
+# Kuber AI — Gold 
 
 ## Highlights
-- **UI**: Chat left (green user bubbles), profile + buy + history right. “Buy Suggested” appears only when intent is gold.
+- **UI**: Chat (green user bubbles), profile + buy + history. “Buy Suggested” appears only when intent is gold.
 - **Auth**: email/password (bcrypt), JWT httpOnly cookie.
 - **/api/chat**: NLP intent detection (OpenAI optional; robust local classifier fallback). Random fact (inflation hedge/diversification/liquidity) + nudge.
-- **/api/buy-gold**: Validation (bad format / amount < ₹10 gracefully handled). Computes grams, writes to SQLite (Prisma), returns receipt.
+- **/api/buy-gold**: Validation (bad format / amount < ₹10 gracefully handled). Computes grams, writes to Postgresql(Prisma), returns receipt.
 - **/api/history**: Returns user’s purchase history + totals.
 - **DB**: User, Purchase, ChatMessage.
 

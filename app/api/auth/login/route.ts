@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { verifyPassword, signJWT } from "@/lib/auth";
 import { z } from "zod";
-import { cookies } from "next/headers";
 
 const Login = z.object({
   email: z.string().email(),
@@ -27,16 +26,7 @@ export async function POST(req: Request) {
 
     const token = await signJWT({ sub: user.id, email: user.email });
 
-    // ✅ set secure cookie
-    cookies().set("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-    });
-
-    return NextResponse.json({
+    const res = NextResponse.json({
       ok: true,
       user: {
         id: user.id,
@@ -44,6 +34,16 @@ export async function POST(req: Request) {
         name: user.name,
       },
     });
+
+    res.cookies.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
+    return res;
   } catch (err: any) {
     console.error("❌ Login error:", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

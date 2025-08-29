@@ -1,5 +1,6 @@
 import * as jose from "jose";
-import bcrypt from "bcryptjs";
+const bcrypt = require("bcryptjs");
+
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 

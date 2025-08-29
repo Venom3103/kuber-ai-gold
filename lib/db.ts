@@ -7,25 +7,27 @@ export const prisma =
   new PrismaClient({
     log: [
       { emit: "event", level: "query" },
-      { emit: "event", level: "error" },
       { emit: "event", level: "warn" },
+      { emit: "event", level: "error" },
     ],
   });
 
-// Pretty print Prisma queries in development
 if (process.env.NODE_ENV === "development") {
-  prisma.$on("query" as Prisma.LogLevel, (e: Prisma.QueryEvent) => {
+  // @ts-ignore
+  prisma.$on("query", (e: Prisma.QueryEvent) => {
     console.log("\n🟡 Prisma Query");
     console.log(`   SQL:    ${e.query}`);
     console.log(`   Params: ${e.params}`);
     console.log(`   Time:   ${e.duration}ms\n`);
   });
 
-  prisma.$on("warn" as Prisma.LogLevel, (e: Prisma.LogEvent) => {
+  // @ts-ignore
+  prisma.$on("warn", (e: Prisma.LogEvent) => {
     console.warn("⚠️ Prisma Warning:", e.message);
   });
 
-  prisma.$on("error" as Prisma.LogLevel, (e: Prisma.LogEvent) => {
+  // @ts-ignore
+  prisma.$on("error", (e: Prisma.LogEvent) => {
     console.error("❌ Prisma Error:", e.message);
   });
 }

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
@@ -14,18 +14,18 @@ export const prisma =
 
 // Pretty print Prisma queries in development
 if (process.env.NODE_ENV === "development") {
-  prisma.$on("query", (e) => {
+  prisma.$on("query", (e: Prisma.QueryEvent) => {
     console.log("\n🟡 Prisma Query");
     console.log(`   SQL:    ${e.query}`);
     console.log(`   Params: ${e.params}`);
     console.log(`   Time:   ${e.duration}ms\n`);
   });
 
-  prisma.$on("warn", (e) => {
+  prisma.$on("warn", (e: Prisma.LogEvent) => {
     console.warn("⚠️ Prisma Warning:", e.message);
   });
 
-  prisma.$on("error", (e) => {
+  prisma.$on("error", (e: Prisma.LogEvent) => {
     console.error("❌ Prisma Error:", e.message);
   });
 }

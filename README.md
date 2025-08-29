@@ -80,7 +80,9 @@
 • Create a .env.local file in the root directory and add the following:
 
 • DATABASE_URL=your_postgresql_connection_string
+
 • OPENAI_API_KEY=your_openai_api_key (optional)
+
 • JWT_SECRET=your_jwt_secret
 
 

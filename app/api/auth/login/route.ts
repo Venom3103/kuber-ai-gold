@@ -23,13 +23,19 @@ export async function POST(req: Request) {
     // fetch user from DB
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Invalid credentials" },
+        { status: 401 }
+      );
     }
 
     // verify password
     const isValid = await bcrypt.compare(password, user.passwordHash);
     if (!isValid) {
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Invalid credentials" },
+        { status: 401 }
+      );
     }
 
     // sign JWT
@@ -45,9 +51,12 @@ export async function POST(req: Request) {
       user: { id: user.id, email: user.email, name: user.name },
     });
 
-    cookies().set("token", token, {
+    // 🔑 Fix cookie settings for persistence
+    res.cookies.set({
+      name: "token",
+      value: token,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production", // ✅ false in localhost
       sameSite: "lax",
       path: "/",
       maxAge: 60 * 60 * 24 * 7, // 7 days

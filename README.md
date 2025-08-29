@@ -97,7 +97,7 @@
 **The application should now be running at http://localhost:3000**
 .
 
-# 📄 API Endpoints**
+# 📄 API Endpoints
 
 **POST /api/chat :**
 

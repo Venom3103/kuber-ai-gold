@@ -1,7 +1,6 @@
 import * as jose from "jose";
 const bcrypt = require("bcryptjs");
 
-
 const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
 export async function signJWT(payload: object) {
@@ -12,8 +11,14 @@ export async function signJWT(payload: object) {
     .sign(secret);
 }
 
-export async function verifyJWT(token: string): Promise<{ sub: string; email?: string } | null>
-
+export async function verifyJWT(token: string): Promise<{ sub: string; email?: string } | null> {
+  try {
+    const { payload } = await jose.jwtVerify(token, secret);
+    return payload as { sub: string; email?: string };
+  } catch {
+    return null;
+  }
+}
 
 export function hashPassword(pw: string) {
   return bcrypt.hashSync(pw, 10);

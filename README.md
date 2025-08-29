@@ -1,7 +1,5 @@
 
-# Kuber AI — Gold Advisor (Supreme Build v7)
-
-**God-tier assignment**: polished UI + smarter intent + full auth + DB history.
+# Kuber AI — Gold (Supreme Build v7)
 
 ## Highlights
 - **UI**: Chat left (green user bubbles), profile + buy + history right. “Buy Suggested” appears only when intent is gold.
@@ -14,10 +12,10 @@
 ## Run
 ```bash
 npm i
-cp .env.local.example .env.local
-npx prisma migrate dev --name init
+cp .env.local.example .env
+npx prisma generate
 npm run dev
 ```
-Open `http://localhost:3000/login`, create an account, then start chatting.
+Open `http://localhost:3000`, create an account, then start chatting.
 
-Generated 2025-08-26T21:17:26.457274Z
+Generated 2025-08-29 T21:17:26.457274Z

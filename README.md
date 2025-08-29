@@ -1,42 +1,42 @@
 # **Kuber-AI-Gold**
 
-Kuber-AI-Gold is an intelligent web application designed to provide personalized gold investment guidance and seamless transaction tracking. It combines conversational AI with secure transactional features, allowing users to make informed investment decisions.
+**Kuber-AI-Gold is an intelligent web application designed to provide personalized gold investment guidance and seamless transaction tracking. It combines conversational AI with secure transactional features, allowing users to make informed investment decisions.**
 
 # 🚀 Features
 
 **Intuitive UI :**
 
-Chat interface with green user bubbles.
+• Chat interface with green user bubbles.
 
-Profile management, gold purchase, and transaction history sections.
+• Profile management, gold purchase, and transaction history sections.
 
-"Buy Suggested" feature appears contextually when the user's intent is gold investment.
+• "Buy Suggested" feature appears contextually when the user's intent is gold investment.
 
 **Authentication & Security :**
 
-Secure email/password login using bcrypt.
+• Secure email/password login using bcrypt.
 
-JWT with httpOnly cookies for session management.
+• JWT with httpOnly cookies for session management.
 
 **Conversational AI :**
 
-/api/chat endpoint supports NLP-based intent detection.
+• /api/chat endpoint supports NLP-based intent detection.
 
-Provides contextual advice, investment nudges, and random facts on inflation hedge, diversification, and liquidity.
+• Provides contextual advice, investment nudges, and random facts on inflation hedge, diversification, and liquidity.
 
 **Gold Purchase Workflow :**
 
-/api/buy-gold endpoint validates inputs (handles incorrect formats or amounts < ₹10 gracefully).
+• /api/buy-gold endpoint validates inputs (handles incorrect formats or amounts < ₹10 gracefully).
 
-Calculates gold in grams, stores transactions in PostgreSQL via Prisma, and returns a detailed receipt.
+• Calculates gold in grams, stores transactions in PostgreSQL via Prisma, and returns a detailed receipt.
 
 **Purchase History :**
 
-/api/history endpoint provides users with a complete view of their past transactions and cumulative totals.
+• /api/history endpoint provides users with a complete view of their past transactions and cumulative totals.
 
 **Database Schema :**
 
-Structured around User, Purchase, and ChatMessage entities for efficient data management.
+• Structured around User, Purchase, and ChatMessage entities for efficient data management.
 
 # 🛠️ Tech Stack
 

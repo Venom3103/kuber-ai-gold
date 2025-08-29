@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { verifyPassword, signJWT } from "@/lib/auth";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import { z } from "zod";
 
-const Login = z.object({
+const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
@@ -11,28 +12,37 @@ const Login = z.object({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const parsed = Login.safeParse(body);
+    const parsed = LoginSchema.safeParse(body);
+
     if (!parsed.success) {
       return NextResponse.json({ error: "Invalid input" }, { status: 400 });
     }
 
-    const user = await prisma.user.findUnique({
-      where: { email: parsed.data.email },
-    });
+    const { email, password } = parsed.data;
 
-    if (!user || !(await verifyPassword(parsed.data.password, user.passwordHash))) {
+    // fetch user from DB
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
 
-    const token = await signJWT({ sub: user.id, email: user.email });
+    // verify password
+    const isValid = await bcrypt.compare(password, user.passwordHash);
+    if (!isValid) {
+      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    }
 
+    // sign JWT
+    const token = jwt.sign(
+      { sub: user.id, email: user.email },
+      process.env.JWT_SECRET!,
+      { expiresIn: "7d" }
+    );
+
+    // send JSON response + set cookie
     const res = NextResponse.json({
       ok: true,
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-      },
+      user: { id: user.id, email: user.email, name: user.name },
     });
 
     res.cookies.set("token", token, {
@@ -40,7 +50,7 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 60 * 24 * 7, // 7 days
     });
 
     return res;

@@ -14,18 +14,18 @@ export const prisma =
 
 // Pretty print Prisma queries in development
 if (process.env.NODE_ENV === "development") {
-  prisma.$on<"query">("query", (e: Prisma.QueryEvent) => {
+  prisma.$on("query", (e: Prisma.QueryEvent) => {
     console.log("\n🟡 Prisma Query");
     console.log(`   SQL:    ${e.query}`);
     console.log(`   Params: ${e.params}`);
     console.log(`   Time:   ${e.duration}ms\n`);
   });
 
-  prisma.$on<"warn">("warn", (e: Prisma.LogEvent) => {
+  prisma.$on("warn", (e: Prisma.LogEvent) => {
     console.warn("⚠️ Prisma Warning:", e.message);
   });
 
-  prisma.$on<"error">("error", (e: Prisma.LogEvent) => {
+  prisma.$on("error", (e: Prisma.LogEvent) => {
     console.error("❌ Prisma Error:", e.message);
   });
 }

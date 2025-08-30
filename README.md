@@ -81,7 +81,7 @@
 
 • DATABASE_URL=your_postgresql_connection_string
 
-• OPENAI_API_KEY=your_openai_api_key (optional)
+• OPENAI_API_KEY=your_openai_api_key
 
 • JWT_SECRET=your_jwt_secret
 
